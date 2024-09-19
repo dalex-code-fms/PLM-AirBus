@@ -11,50 +11,50 @@ public class PLANES {
 		HashMap<String, ArrayList<String>> arrayOfAirplanesPieces = new HashMap<>();
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcome to AIRBUS AIRPLANE SYSTEM!");
+		displayText(0);
 		int userChoice = 0;
 		String airplaneID = "";
 			
 		while(userChoice != 5) {
-			System.out.println("\nWhat do you want to do ?\n");
-			System.out.println("1 - Show all airplanes | 2 - Search for airplane | 3 - add new piece to airplane | 4 - remove piece from airplane | 5 - exit\n");
+			displayText(1);
+			displayText(2);
 			
 			userChoice = sc.nextInt();
 			
 			switch (userChoice) {
 			case 1:
-				System.out.println("List of all Airplanes\n");
+				displayText(3);
 				showListOfAirplanes(listOfAirPlanes);
-				System.out.println("1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back");
+				displayText(4);
 				while (userChoice != 6) {
 					userChoice = sc.nextInt();
 					if (userChoice == 1) {
-						System.out.println("add airplane ID to add a piece: ");
+						displayText(5);
 						airplaneID = searchForAirplane(listOfAirPlanes);
-						System.out.println("1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back");
-						addPieceToAirplane(airplaneID);
+						displayText(4);
+						arrayOfAirplanesPieces = addPieceToAirplane(airplaneID);
 					} else if (userChoice == 2) {
-						System.out.println("add airplane ID to remove a piece:");
+						displayText(5);
 						searchForAirplane(listOfAirPlanes);
-						System.out.println("1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back");
+						displayText(4);
 					}
 				}
 				break;
 			case 2:
-				System.out.println("Search for airplane");
+				displayText(6);
 				searchForAirplane(listOfAirPlanes);
-				System.out.println("1 - add new piece to airplane | 2 - remove a piece from airplane | 6 - go back");
+				displayText(4);
 				while (userChoice != 6) {
 					userChoice = sc.nextInt();
 					if (userChoice == 1) {
-						System.out.println("add airplane ID to add a piece: ");
+						displayText(5);
 						airplaneID = searchForAirplane(listOfAirPlanes);
-						System.out.println("1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back");
-						addPieceToAirplane(airplaneID);
+						displayText(4);
+						arrayOfAirplanesPieces = addPieceToAirplane(airplaneID);
 					} else if (userChoice == 2) {
-						System.out.println("add airplane ID to remove a piece: ");
+						displayText(5);
 						searchForAirplane(listOfAirPlanes);
-						System.out.println("1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back");
+						displayText(4);
 					}
 				}
 				break;
@@ -62,7 +62,8 @@ public class PLANES {
 				
 				System.out.println("add new piece to airplane by ID");
 				airplaneID = searchForAirplane(listOfAirPlanes);
-				addPieceToAirplane(airplaneID);
+				arrayOfAirplanesPieces = addPieceToAirplane(airplaneID);
+				System.out.println(arrayOfAirplanesPieces);
 				break;
 			case 4:
 				System.out.println("remove a piece from airplane by ID");
@@ -76,7 +77,7 @@ public class PLANES {
 		sc.close();
 	}
 	
-	public static void addPieceToAirplane(String airplaneID) {
+	public static HashMap<String, ArrayList<String>> addPieceToAirplane(String airplaneID) {
 		HashMap<String, ArrayList<String>> arrayOfAirplanesPieces = new HashMap<>();
 		Scanner sc = new Scanner(System.in);
 		String name = "";
@@ -90,7 +91,8 @@ public class PLANES {
 		System.out.print("Category : ");
 		category = sc.nextLine();
 		arrayOfAirplanesPieces.put(airplaneID, new ArrayList<String>(Arrays.asList("Name : " + name, "Price : " + price, "Category : " + category)));
-		System.out.println(arrayOfAirplanesPieces);
+		
+		return arrayOfAirplanesPieces;
 	}
 	
 	public static ArrayList<ArrayList<String>> getArrayBySearchMethod(int index, ArrayList<ArrayList<String>> listOfAirPlanes, String userInput){
@@ -131,6 +133,24 @@ public class PLANES {
 	// generate a random UUID with 128bits and convert it to String
 	public static String createUniqueID() {
 		return UUID.randomUUID().toString();
+	}
+	
+	public static void displayText(int index) {
+		String[] arrOfSentences = {
+				"Welcome to AIRBUS AIRPLANE SYSTEM!", //0
+				"\nWhat do you want to do ?\n", //1
+				"1 - Show all airplanes | 2 - Search for airplane | 3 - add new piece to airplane | 4 - remove piece from airplane | 5 - exit\n", //2
+				"List of all Airplanes\n", //3
+				"1 - add new piece to airplane by ID | 2 - remove a piece from airplane by ID | 6 - go back",//4
+				"add airplane ID to add a piece: ",//5
+				"Search for airplane",//6
+				"add new piece to airplane by ID",//7
+				"remove a piece from airplane by ID",//8
+				"You have to choice at least one valid option !",//9
+				"Goodbye!",//10
+		};
+		
+		System.out.println(arrOfSentences[index]);
 	}
 	
 	// list of airplanes
