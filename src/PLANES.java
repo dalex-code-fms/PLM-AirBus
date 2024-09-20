@@ -14,7 +14,6 @@ public class PLANES {
 		Scanner sc = new Scanner(System.in);
 		displayText(0);
 		int userChoice = 0;
-		String airplaneID = "";
 			
 		while(userChoice != 5) {
 			displayText(1);
@@ -29,13 +28,21 @@ public class PLANES {
 				break;
 			case 2:
 				displayText(12);
-				searchForAirplane(listOfAirPlanes);
+				displayListOfAirplanes(searchForAirplane(listOfAirPlanes));
+				displayText(4);
 				break;
 			case 3:
-				
-				break;
-			case 4:
-				
+				displayText(14);
+				displayListOfAirplanesPieces(listOfAirplanesPieces);
+				int pieceID = sc.nextInt();
+				displayText(5);
+				String airplaneID = sc.nextLine();
+				userChoice = sc.nextInt();
+				if (userChoice == 1) {
+					addPiece(pieceID, airplaneID, listOfAirPlanes, listOfAirplanesPieces);
+				} else {
+					removePiece(pieceID, airplaneID);
+				}
 				break;
 			default:
 				System.out.println("You have to choice at least one valid option !");
@@ -46,28 +53,30 @@ public class PLANES {
 		sc.close();
 	}
 	
-	public static HashMap<String, ArrayList<String>> addPieceToAirplane(String airplaneID, HashMap<String, ArrayList<String>> arrayOfAirplanesPieces) {
-		HashMap<String, ArrayList<String>> pieces = arrayOfAirplanesPieces;
-		Scanner sc = new Scanner(System.in);
-		String name = "";
-		String price = "";
-		String category = "";
-		System.out.println("Add the piece details for airplane : " + airplaneID);
-		System.out.print("Name : ");
-		name = sc.nextLine();
-		System.out.print("Price : ");
-		price = sc.nextLine();
-		System.out.print("Category : ");
-		category = sc.nextLine();
-		pieces.put(airplaneID, new ArrayList<String>(Arrays.asList("Name : " + name, "Price : " + price, "Category : " + category)));
+	public static HashMap<String, ArrayList<String>> addPiece(int pieceID, String airplaneID, HashMap<String, ArrayList<String>> listOfAirPlanes, HashMap<Integer, ArrayList<String>> listOfAirplanesPieces) {
+		String pieceName = "";
 		
-		return pieces;
+		for (Map.Entry<Integer, ArrayList<String>> piece : listOfAirplanesPieces.entrySet()) {
+			if (piece.equals(pieceID)) {
+				pieceName = piece.getValue().get(0);
+			}
+		}
+		
+		HashMap<String, ArrayList<String>> updatedListOfAirplanes = new HashMap<String, ArrayList<String>>();
+		
+		for (Map.Entry<String, ArrayList<String>> airplane : listOfAirPlanes.entrySet()) {
+			if (airplane.getKey().equals(airplaneID)) {
+				updatedListOfAirplanes.put(airplane.getKey(), airplane.getValue().add(pieceName)); 
+			}
+		}
+		
+		return updatedListOfAirplanes;
 	}
 	
-	public static String searchForAirplane(HashMap<String, ArrayList<String>> listOfAirPlanes) {
+	
+	public static HashMap<String, ArrayList<String>> searchForAirplane(HashMap<String, ArrayList<String>> listOfAirPlanes) {
 		Scanner sc = new Scanner(System.in);
 		String userInput = sc.nextLine();
-		String airplaneID = "";
 		
 		HashMap<String, ArrayList<String>> resultOfSearch = new HashMap<String, ArrayList<String>>();
 		
@@ -75,14 +84,18 @@ public class PLANES {
 			
 			if(airplane.getKey().equals(userInput)) {
 				resultOfSearch.put(airplane.getKey(), airplane.getValue());
-				airplaneID = userInput;
 			} else if(airplane.getValue().get(0).contains(userInput)) {
 				resultOfSearch.put(airplane.getKey(), airplane.getValue());
 			}
 		}
-		displayListOfAirplanes(resultOfSearch);
 		
-		return airplaneID;
+		return resultOfSearch;
+	}
+	
+	public static void displayListOfAirplanesPieces(HashMap<Integer, ArrayList<String>> listOfAirplanesPieces ) {
+		for (Map.Entry<Integer, ArrayList<String>> airplane : listOfAirplanesPieces.entrySet()){
+			System.out.printf( "%d %s%n", airplane.getKey() ,airplane.getValue());
+		}
 	}
 	
 	public static void displayListOfAirplanes(HashMap<String, ArrayList<String>> listOfAirPlanes) {
@@ -103,7 +116,7 @@ public class PLANES {
 				"1 - DISPLAY ALL AIRPLANES | 2 - SEARCH FOR AIRPLANE | 3 - ADD/REMOVE AIRPLANE PIECE | 5 - EXIT\n", //2
 				"LIST OF AVAIABLE AIRPLANES\n", //3
 				"1 - ADD/REMOVE AIRPLANE PIECE |6 - GO BACK",//4
-				"ADD AIRPLANE ID: ",//5
+				"ADD AIRPLANE ID : ",//5
 				"1 - ADD",//6
 				"2 - REMOVE",//7
 				"remove a piece from airplane by ID",//8
@@ -111,7 +124,8 @@ public class PLANES {
 				"6 - GO BACK",//10
 				"GOODBYE !!!",//11
 				"SEARCH AIRPLANE BY ID OR PROGRAM",//12
-				"ENTER A VALID VALUE OR THIS AIRPLANE DO NOT EXIST !!!"//13
+				"ENTER A VALID VALUE OR THIS AIRPLANE DO NOT EXIST !!!",//13
+				"SELECT THE PIECE : "//14
 		};
 		
 		System.out.println(arrOfSentences[index]);
