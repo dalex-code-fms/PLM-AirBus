@@ -155,9 +155,10 @@ public class PLANES {
 		System.out.println(arrOfSentences[index]);
 	}
 	
+	//list of airplanes pieces
 	public static HashMap<Integer, ArrayList<String>> getListOfAirplanePieces(){
+		
 		HashMap<Integer, ArrayList<String>>ListOfAirplanePieces = new HashMap<Integer, ArrayList<String>>();
-	
 		ListOfAirplanePieces.put(1, new ArrayList<>(Arrays.asList("Turbofan Engine", "3000000", "Propulsion")));
 		ListOfAirplanePieces.put(2, new ArrayList<>(Arrays.asList("Flight Control System", "100000", "Electronics/Control")));
 		ListOfAirplanePieces.put(3, new ArrayList<>(Arrays.asList("Fuel Pump", "10000", "Fuel System")));
@@ -169,17 +170,17 @@ public class PLANES {
 	}
 	
 	// list of airplanes
-	public static ArrayList<ArrayList<String>> getListOfAirPlanes(){
+	public static HashMap<String, ArrayList<String>> getListOfAirPlanes(){
 		
-		ArrayList<ArrayList<String>> listOfAirPlanes = new ArrayList<>();
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "A220-100", "conception", "transport de passagers")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "A318", "conception", "transport de passagers")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "A330-200F", "conception", "frêt")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "A330P2F", "conception", "frêt")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "A400M Atlas", "conception", "militaire")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "C295", "conception", "militaire")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "ACJ320neo", "conception", "affaires")));
-		listOfAirPlanes.add(new ArrayList<>(Arrays.asList(createUniqueID(), "ACJ350 XWB", "conception", "affaires")));
+		HashMap<String, ArrayList<String>> listOfAirPlanes = new HashMap<String, ArrayList<String>>();
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("A220-100", "conception", "transport de passagers")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("A318", "conception", "transport de passagers")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("A330-200F", "conception", "frêt")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("A330P2F", "conception", "frêt")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("A400M Atlas", "conception", "militaire")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("C295", "conception", "militaire")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("ACJ320neo", "conception", "affaires")));
+		listOfAirPlanes.put(createUniqueID(), new ArrayList<>(Arrays.asList("ACJ350 XWB", "conception", "affaires")));
 		
 		return listOfAirPlanes;
 	}
