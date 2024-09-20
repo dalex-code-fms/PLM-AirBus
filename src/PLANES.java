@@ -25,11 +25,11 @@ public class PLANES {
 			switch (userChoice) {
 			case 1:
 				displayListOfAirplanes(listOfAirPlanes);
-				
+				displayText(4);
 				break;
 			case 2:
-				
-				
+				displayText(12);
+				searchForAirplane(listOfAirPlanes);
 				break;
 			case 3:
 				
@@ -64,31 +64,23 @@ public class PLANES {
 		return pieces;
 	}
 	
-	public static ArrayList<ArrayList<String>> getArrayBySearchMethod(int index, ArrayList<ArrayList<String>> listOfAirPlanes, String userInput){
-		
-		ArrayList<ArrayList<String>> arrOfSelectedAirplanes = new ArrayList<>();
-		
-		for (int i = 0; i < listOfAirPlanes.size(); i++) {
-			if (listOfAirPlanes.get(i).get(index).contains(userInput)) {
-				arrOfSelectedAirplanes.add(listOfAirPlanes.get(i));
-			}
-		}
-		return arrOfSelectedAirplanes;
-	}
-	
-	public static String searchForAirplane(ArrayList<ArrayList<String>> listOfAirPlanes) {
+	public static String searchForAirplane(HashMap<String, ArrayList<String>> listOfAirPlanes) {
 		Scanner sc = new Scanner(System.in);
 		String userInput = sc.nextLine();
 		String airplaneID = "";
 		
-		int sizeOfID = createUniqueID().length();
-
-		if (userInput.length() == sizeOfID) {
-			displayListOfAirplanes(getArrayBySearchMethod(0, listOfAirPlanes, userInput));
-			airplaneID = userInput;
-		} else {
-			displayListOfAirplanes(getArrayBySearchMethod(1, listOfAirPlanes, userInput));
+		HashMap<String, ArrayList<String>> resultOfSearch = new HashMap<String, ArrayList<String>>();
+		
+		for (Map.Entry<String, ArrayList<String>> airplane : listOfAirPlanes.entrySet()) {
+			
+			if(airplane.getKey().equals(userInput)) {
+				resultOfSearch.put(airplane.getKey(), airplane.getValue());
+				airplaneID = userInput;
+			} else if(airplane.getValue().get(0).contains(userInput)) {
+				resultOfSearch.put(airplane.getKey(), airplane.getValue());
+			}
 		}
+		displayListOfAirplanes(resultOfSearch);
 		
 		return airplaneID;
 	}
@@ -117,7 +109,9 @@ public class PLANES {
 				"remove a piece from airplane by ID",//8
 				"You have to choice at least one valid option !",//9
 				"6 - GO BACK",//10
-				"Goodbye!",//11
+				"GOODBYE !!!",//11
+				"SEARCH AIRPLANE BY ID OR PROGRAM",//12
+				"ENTER A VALID VALUE OR THIS AIRPLANE DO NOT EXIST !!!"//13
 		};
 		
 		System.out.println(arrOfSentences[index]);
